@@ -49,7 +49,7 @@ for ARCH in $ARCHS; do
 
 	./autogen.sh
 
-	CFLAGS="-g -O2 -pipe -arch ${ARCH} \
+	CFLAGS="-g -O3 -pipe -arch ${ARCH} \
 		-isysroot ${SDK_ROOT} \
         -I${SDK_ROOT}/usr/include \
 		${EXTRA_CFLAGS}"
