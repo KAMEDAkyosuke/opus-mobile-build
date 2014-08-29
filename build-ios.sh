@@ -35,7 +35,7 @@ for ARCH in $ARCHS; do
             ;;
         i386)
             EXTRA_FLAGS="--with-pic"
-            EXTRA_CFLAGS="-mios-simulator-version-min=6.0"
+            EXTRA_CFLAGS="-mios-simulator-version-min=$IOS_SIMULATOR_VERSION_MIN"
             PLATFORM=iPhoneSimulator
             ;;
         *)
