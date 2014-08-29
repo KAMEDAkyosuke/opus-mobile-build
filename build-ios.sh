@@ -17,14 +17,6 @@ for ARCH in $ARCHS; do
     DIST_DIR=../build/$ARCH
     mkdir -p $DIST_DIR
     PLATFORM=iPhoneOS
-    if [ $ARCH = i386 ]; then
-        PLATFORM=iPhoneSimulator
-    fi
-
-    SDK_ROOT=$DEV_ROOT/Platforms/$PLATFORM.platform/Developer/SDKs/$PLATFORM$IOS_SDK_VERSION.sdk
-
-    OPTIONS=$OPTIONS" --prefix="
-    OPTIONS=$OPTIONS" --with-sysroot=$SDK_ROOT"
     HOST=${ARCH}-apple-darwin
 
     case $ARCH in
@@ -41,11 +33,20 @@ for ARCH in $ARCHS; do
             EXTRA_CFLAGS=""
             HOST=aarch64-apple-darwin
             ;;
+        i386)
+            EXTRA_FLAGS="--with-pic"
+            EXTRA_CFLAGS="-mios-simulator-version-min=6.0"
+            PLATFORM=iPhoneSimulator
+            ;;
         *)
             echo "Unsupported architecture ${ARCH}"
             exit 1
             ;;
     esac
+
+    SDK_ROOT=$DEV_ROOT/Platforms/$PLATFORM.platform/Developer/SDKs/$PLATFORM$IOS_SDK_VERSION.sdk
+    OPTIONS=$OPTIONS" --prefix="
+    OPTIONS=$OPTIONS" --with-sysroot=$SDK_ROOT"
 
 	./autogen.sh
 
